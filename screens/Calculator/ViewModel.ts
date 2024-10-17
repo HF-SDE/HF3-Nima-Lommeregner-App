@@ -1,6 +1,5 @@
 import * as Clipboard from 'expo-clipboard';
 
-import { main } from '@/stores/main';
 import { makeAutoObservable } from 'mobx';
 import { toast } from 'sonner-native';
 
@@ -21,7 +20,6 @@ export default class CalculatorViewModel {
     if (value === '' || value === undefined || value == '00') {
       this.model.input = '0';
       this.model.history.push('0');
-      main.update();
 
       return;
     }
@@ -29,8 +27,6 @@ export default class CalculatorViewModel {
     this.model.input = value.replace(/^0+(?!\.)/, '');
 
     this.model.history.push(value);
-
-    main.update();
   }
 
   get strList() {
@@ -74,9 +70,15 @@ export default class CalculatorViewModel {
 
     if (strList.length < 2) return '';
 
-    const result = eval(str);
+    try {
+      const result = eval(str);
 
-    return result;
+      if (str === result.toString()) return '';
+
+      return result;
+    } catch (e) {
+      return '';
+    }
   }
 
   finalEvaluate() {

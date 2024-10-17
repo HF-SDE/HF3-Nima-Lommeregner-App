@@ -1,5 +1,3 @@
-import uuid from 'react-native-uuid';
-
 import { makeAutoObservable } from 'mobx';
 
 import CalculatorViewModel from '../Calculator/ViewModel';
@@ -21,26 +19,25 @@ export default class MainViewModel {
   }
 
   addCalculator() {
-    const newCalculator = {
-      id: uuid.v4() as string,
-      name: `Calculator ${this.calculators.length}`,
-      model: new CalculatorViewModel(),
-    };
-    // const newCalculator = new CalculatorViewModel();
-    
+    const newCalculator = new CalculatorViewModel();
+
     this.calculators = [...this.calculators, newCalculator];
 
     return newCalculator;
   }
 
   removeCalculator(removeId: string) {
-    this.calculators = this.calculators.filter(({ id }) => id !== removeId);
+    this.calculators = this.calculators.filter(
+      ({ model }) => model.id !== removeId,
+    );
   }
 
   renameCalculator(renameId: string, name: string) {
-    const calculator = this.calculators.find(({ id }) => id === renameId);
+    const calculator = this.calculators.find(
+      ({ model }) => model.id === renameId,
+    );
 
-    if (calculator) calculator.name = name;
+    if (calculator) calculator.model.name = name;
   }
 
   update() {

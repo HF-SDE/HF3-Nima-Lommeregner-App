@@ -1,5 +1,7 @@
+import { useCallback } from 'react';
 import { View } from 'react-native';
 
+import { useFocusEffect } from '@react-navigation/native';
 import { observer } from 'mobx-react-lite';
 import { FlatList, Swipeable } from 'react-native-gesture-handler';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -16,9 +18,11 @@ interface MainProps {
 }
 
 export default observer(({ navigation }: MainProps) => {
-  function onDelete(id: string) {
-    main.removeCalculator(id);
-  }
+  useFocusEffect(
+    useCallback(() => {
+      main.update();
+    }, []),
+  );
 
   return (
     <SafeAreaView>
@@ -26,33 +30,33 @@ export default observer(({ navigation }: MainProps) => {
         <FlatList
           className="w-full"
           data={main.calculators}
-          keyExtractor={(item) => item.id}
-          renderItem={({ item }) => (
+          keyExtractor={({ model }) => model.id}
+          renderItem={({ item: calc }) => (
             <Swipeable
               renderRightActions={SwipeRightAction}
-              onSwipeableOpen={() => onDelete(item.id)}
+              onSwipeableOpen={() => main.removeCalculator(calc.model.id)}
             >
               <Button
-                key={item.id}
+                key={calc.model.id}
                 className="h-16 w-full rounded-3xl"
                 onPress={() => {
-                  navigation.navigate(item.id);
+                  navigation.navigate(calc.model.id);
                 }}
               >
                 <View className="flex w-full flex-row items-center justify-between p-2 pr-7">
                   <Input
                     onChangeText={(value) =>
-                      main.renameCalculator(item.id, value)
+                      main.renameCalculator(calc.model.id, value)
                     }
                     className="rounded-xl bg-accent !text-3xl"
                     autoCorrect={false}
                   >
-                    {item.name}
+                    {calc.model.name}
                   </Input>
 
-                  {item.model.input != '0' && (
+                  {calc.model.input != '0' && (
                     <Text className="!text-base !text-muted">
-                      {item.model.input}
+                      {calc.model.input}
                     </Text>
                   )}
                 </View>

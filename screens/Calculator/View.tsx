@@ -28,7 +28,7 @@ export default observer(({ route }: CalculatorProps) => {
           <Text className="ml-auto text-5xl">{viewModel.input}</Text>
         </TouchableOpacity>
 
-        {viewModel.evaluate() != '' && (
+        {viewModel.evaluate() !== '' && (
           <View className="absolute top-32">
             <Text>
               {viewModel.input} = {viewModel.evaluate()}

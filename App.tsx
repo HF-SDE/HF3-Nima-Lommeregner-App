@@ -53,15 +53,15 @@ export default observer(() => {
               <Stack.Screen name="Menu" component={Main} />
               {main.calculators.map((calculator) => (
                 <Stack.Screen
-                  key={calculator.id}
-                  name={calculator.id}
+                  key={calculator.model.id}
+                  name={calculator.model.id}
                   component={Index}
                   options={{
-                    title: calculator.name,
-                    headerRight: () => <TransferDialog id={calculator.id} />,
+                    title: calculator.model.name,
+                    headerRight: () => <TransferDialog id={calculator.model.id} />,
                   }}
                   initialParams={{
-                    viewModel: calculator.model,
+                    viewModel: calculator,
                   }}
                 />
               ))}

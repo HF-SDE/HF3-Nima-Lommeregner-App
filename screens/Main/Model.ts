@@ -1,7 +1,9 @@
-import { makeAutoObservable } from 'mobx';
+import { makeAutoObservable, makeObservable } from 'mobx';
+
+import CalculatorViewModel from '../Calculator/ViewModel';
 
 export default class MainModel {
-  calculators: Calculator[] = [];
+  calculators: CalculatorViewModel[] = [];
 
   constructor() {
     makeAutoObservable(this);

@@ -13,6 +13,7 @@ import {
   Dialog as ShadcnDialog,
 } from '@/components/ui/dialog';
 import { Text } from '@/components/ui/text';
+import CalculatorViewModel from '@/screens/Calculator/ViewModel';
 
 import { main } from '@/stores/main';
 import { toast } from 'sonner-native';
@@ -22,12 +23,12 @@ interface TransferDialogProps {
 }
 
 export default function TransferDialog({ id }: TransferDialogProps) {
-  function transferResult(to: Calculator) {
-    const from = main.calculators.find((calc) => calc.id == id);
+  function transferResult(to: CalculatorViewModel) {
+    const from = main.calculators.find((calc) => calc.model.id == id);
 
     if (from) to.model.input = from.model.input;
 
-    toast.success(`Result transferred to ${to.name} successfully`);
+    toast.success(`Result transferred to ${to.model.name} successfully`);
   }
 
   return (
@@ -43,11 +44,11 @@ export default function TransferDialog({ id }: TransferDialogProps) {
           <DialogDescription>
             <ScrollView StickyHeaderComponent={() => <Text>Hello world</Text>}>
               {main.calculators
-                .filter((calc) => calc.id != id)
+                .filter((calc) => calc.model.id != id)
                 .map((item) => (
-                  <View key={item.id}>
+                  <View key={item.model.id}>
                     <Button size="sm" onPress={() => transferResult(item)}>
-                      {item.name}
+                      {item.model.name}
                     </Button>
                   </View>
                 ))}
