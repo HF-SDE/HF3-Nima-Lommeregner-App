@@ -1,20 +1,19 @@
-import {
-  Text,
-  TouchableOpacity,
-  type TouchableOpacityProps,
-} from 'react-native';
+import { ButtonProps, Button as ShadcnButton } from './ui/button';
+import { Text } from './ui/text';
 
-interface ButtonProps extends TouchableOpacityProps {
-  title: string;
+interface ButtonTextProps extends ButtonProps {
+  children?: string | number | React.ReactNode;
 }
 
-export default function Button({ title, ...props }: ButtonProps) {
+export default function Button({ children, ...props }: ButtonTextProps) {
   return (
-    <TouchableOpacity
-      className="h-20 w-20 items-center justify-center bg-black"
-      onPress={props.onPress}
+    <ShadcnButton
+      variant="secondary"
+      size="xl"
+      className="m-1 !rounded-full"
+      {...props}
     >
-      <Text className="text-center text-3xl text-white">{title}</Text>
-    </TouchableOpacity>
+      {typeof children == 'object' ? children : <Text>{children}</Text>}
+    </ShadcnButton>
   );
 }

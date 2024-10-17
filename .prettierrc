@@ -13,7 +13,7 @@
     "^react$|^(react-(native|dom|native-size-matters))$",
     "react|expo",
     "^@/(components|screens)/(.*)$",
-    "^@/(services|features|utils|helpers|config|redux|hooks)/(.*)$",
+    "^@/(services|features|utils|helpers|config|redux|hooks|lib)/(.*)$",
     "<THIRD_PARTY_MODULES>",
     "^[./]"
   ],
