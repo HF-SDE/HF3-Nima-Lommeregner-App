@@ -26,7 +26,15 @@ export default observer(({ navigation }: MainProps) => {
 
   return (
     <SafeAreaView>
-      <View className="flex h-full w-full items-center justify-end gap-10 p-3">
+      <View className="flex h-full w-full items-center p-2">
+        {main.calculators.length == 0 && (
+          <>
+            <Text className="!text-3xl !text-muted">No calculators</Text>
+            <Text className="!text-2xl !text-muted">
+              Press the "+" to add a calculator
+            </Text>
+          </>
+        )}
         <FlatList
           className="w-full"
           data={main.calculators}
@@ -67,15 +75,6 @@ export default observer(({ navigation }: MainProps) => {
             gap: 10,
           }}
         />
-
-        <Button
-          size="lg"
-          onPress={() => main.addCalculator()}
-          className="w-full rounded-3xl"
-          variant="success"
-        >
-          New calculator
-        </Button>
       </View>
     </SafeAreaView>
   );

@@ -12,7 +12,8 @@
   "importOrder": [
     "^react$|^(react-(native|dom|native-size-matters))$",
     "react|expo",
-    "^@/(components|screens)/(.*)$",
+    "^@/screens/(.*)$",
+    "^@/components/(.*)$",
     "^@/(services|features|utils|helpers|config|redux|hooks|lib)/(.*)$",
     "<THIRD_PARTY_MODULES>",
     "^[./]"

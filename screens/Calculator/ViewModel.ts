@@ -84,9 +84,7 @@ export default class CalculatorViewModel {
   finalEvaluate() {
     const result = this.evaluate();
 
-    if (result == 69 || result == 80085) {
-      toast('Nice');
-    }
+    if (result == 69 || result == 80085) toast('Nice');
 
     if (result === '') {
       toast.error('Invalid input');

@@ -1,4 +1,5 @@
 import { useEffect } from 'react';
+import { TouchableOpacity } from 'react-native';
 
 import {
   NavigationContainer,
@@ -7,10 +8,17 @@ import {
 } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { StatusBar } from 'expo-status-bar';
+import { Plus } from 'lucide-react-native';
 import { observer } from 'mobx-react-lite';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 
+import Index from '@/screens/Calculator/View';
+import Main from '@/screens/Main/View';
+
+import TransferDialog from '@/components/TransferDialog';
+
+import useAppState from '@/hooks/useAppState';
 import { NAV_THEME } from '@/lib/constants';
 
 import '@/global.css';
@@ -18,11 +26,6 @@ import { main } from '@/stores/main';
 import { PortalHost } from '@rn-primitives/portal';
 import { useColorScheme } from 'nativewind';
 import { Toaster, toast } from 'sonner-native';
-
-import TransferDialog from './components/TransferDialog';
-import useAppState from './hooks/useAppState';
-import Index from './screens/Calculator/View';
-import Main from './screens/Main/View';
 
 const LIGHT_THEME: Theme = {
   dark: false,
@@ -50,7 +53,17 @@ export default observer(() => {
             value={colorScheme == 'dark' ? DARK_THEME : LIGHT_THEME}
           >
             <Stack.Navigator initialRouteName="main">
-              <Stack.Screen name="Menu" component={Main} />
+              <Stack.Screen
+                name="Menu"
+                component={Main}
+                options={{
+                  headerRight: () => (
+                    <TouchableOpacity onPress={() => main.addCalculator()}>
+                      <Plus />
+                    </TouchableOpacity>
+                  ),
+                }}
+              />
               {main.calculators.map((calculator) => (
                 <Stack.Screen
                   key={calculator.model.id}
@@ -58,7 +71,9 @@ export default observer(() => {
                   component={Index}
                   options={{
                     title: calculator.model.name,
-                    headerRight: () => <TransferDialog id={calculator.model.id} />,
+                    headerRight: () => (
+                      <TransferDialog id={calculator.model.id} />
+                    ),
                   }}
                   initialParams={{
                     viewModel: calculator,

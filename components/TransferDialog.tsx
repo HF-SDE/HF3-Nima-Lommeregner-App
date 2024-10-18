@@ -1,6 +1,8 @@
 import * as React from 'react';
 import { ScrollView, View } from 'react-native';
 
+import CalculatorViewModel from '@/screens/Calculator/ViewModel';
+
 import Button from '@/components/Button';
 import {
   DialogClose,
@@ -13,7 +15,6 @@ import {
   Dialog as ShadcnDialog,
 } from '@/components/ui/dialog';
 import { Text } from '@/components/ui/text';
-import CalculatorViewModel from '@/screens/Calculator/ViewModel';
 
 import { main } from '@/stores/main';
 import { toast } from 'sonner-native';
@@ -42,12 +43,12 @@ export default function TransferDialog({ id }: TransferDialogProps) {
         <DialogHeader>
           <DialogTitle>Transfer result</DialogTitle>
           <DialogDescription>
-            <ScrollView StickyHeaderComponent={() => <Text>Hello world</Text>}>
+            <ScrollView>
               {main.calculators
                 .filter((calc) => calc.model.id != id)
                 .map((item) => (
                   <View key={item.model.id}>
-                    <Button size="sm" onPress={() => transferResult(item)}>
+                    <Button size="lg" onPress={() => transferResult(item)}>
                       {item.model.name}
                     </Button>
                   </View>
